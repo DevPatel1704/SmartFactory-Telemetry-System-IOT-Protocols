@@ -134,15 +134,3 @@ docker compose logs -f rabbitmq
 
 ---
 
-## Submission Checklist
-
-- [x] All source files completed (publisher, subscriber, server, observer)
-- [x] `pytest tests/ -v` — 29 tests passing, 0 warnings
-- [x] `captures/` contains mqtt.pcap, coap.pcap
-- [x] `report/packet_analysis.md` — all annotation tables filled in
-- [x] `report/comparison_report.md` — full analysis (1994 words)
-- [x] README updated with student name and ID
-
----
-
-*Graduate Course: Real-Time Data Analytics for IoT · Module 1*
