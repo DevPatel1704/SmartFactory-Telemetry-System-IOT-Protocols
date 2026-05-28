@@ -2,7 +2,7 @@
 
 **Real-Time Data Analytics for IoT** · Graduate Course · Module 1
 
-**Student:** Dev Vimalkumar Patel  (101042729) 
+**Student:** Dev Vimalkumar Patel (101042729)
 
 ---
 
@@ -49,15 +49,16 @@ module1-assignment/
 │   │   ├── test_publisher.py   ← Do not modify
 │   │   └── test_qos_loss.py    ← Do not modify (run with -s for output table)
 │   ├── coap/
-│   │   └── test_server.py      ← Do not modify
+│   │   ├── test_server.py      ← Do not modify
+│   │   └── test_proxy.py       ← CoAP-HTTP proxy tests (RFC 8075)
 │   └── amqp/
 │       └── test_topology.py    ← Do not modify
 │
 ├── report/
-│   ├── packet_analysis.md    ← Task 4  Fill in the annotation tables
-│   └── comparison_report.md  ← Task 5  Write your analysis here
+│   ├── packet_analysis.md    ← Task 4  Wire-level packet annotations
+│   └── comparison_report.md  ← Task 5  Protocol comparison analysis
 │
-├── captures/                 ← Task 4  pcap files go here (git-ignored)
+├── captures/                 ← Task 4  pcap files (mqtt.pcap, coap.pcap)
 ├── scripts/
 │   └── capture.sh            ← Task 4  Run to capture traffic
 ├── config/
@@ -130,6 +131,17 @@ docker compose down
 docker compose logs -f mosquitto
 docker compose logs -f rabbitmq
 ```
+
+---
+
+## Submission Checklist
+
+- [x] All source files completed (publisher, subscriber, server, observer)
+- [x] `pytest tests/ -v` — 29 tests passing, 0 warnings
+- [x] `captures/` contains mqtt.pcap, coap.pcap
+- [x] `report/packet_analysis.md` — all annotation tables filled in
+- [x] `report/comparison_report.md` — full analysis (1994 words)
+- [x] README updated with student name and ID
 
 ---
 
