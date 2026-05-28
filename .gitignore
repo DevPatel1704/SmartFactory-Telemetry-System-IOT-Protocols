@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+*.pyc
+.pytest_cache/
+.venv/
+# captures/*.pcap  — pcap files included for submission (Task 4)
+certs/*.key
+certs/*.crt
+certs/*.pem
+.env
+*.log
