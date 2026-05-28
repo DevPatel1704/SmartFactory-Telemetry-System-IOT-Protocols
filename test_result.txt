@@ -1,0 +1,120 @@
+PS C:\Users\Dev\OneDrive\Desktop\Master's\Real time Data Analytics with IOT\Smart Factory IOT protocol integration\Module1_StarterKit\starter_kit> pytest tests/ -v --tb=short                   # ALL tests
+================================================== test session starts ==================================================
+platform win32 -- Python 3.13.5, pytest-7.4.3, pluggy-1.5.0 -- C:\Users\Dev\anaconda3\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\Dev\OneDrive\Desktop\Master's\Real time Data Analytics with IOT\Smart Factory IOT protocol integration\Module1_StarterKit\starter_kit
+configfile: pytest.ini
+plugins: anyio-4.7.0, hydra-core-1.3.2, asyncio-0.21.1, timeout-2.4.0
+asyncio: mode=Mode.AUTO
+timeout: 30.0s
+timeout method: thread
+timeout func_only: False
+collected 29 items                                                                                                       
+
+tests/coap/test_proxy.py::TestCoAPHTTPProxy::test_proxy_http_200 
+---------------------------------------------------- live log setup -----------------------------------------------------
+INFO     src.coap.server:server.py:193 CoAP server will bind to ::1:5683
+INFO     websockets.server:server.py:341 server listening on [::1]:8683
+PASSED                                                                                                             [  3%]
+tests/coap/test_proxy.py::TestCoAPHTTPProxy::test_proxy_content_type PASSED                                        [  6%]
+tests/coap/test_proxy.py::TestCoAPHTTPProxy::test_proxy_cache_control 
+----------------------------------------------------- live log call -----------------------------------------------------
+INFO     src.coap.server:server.py:64 [line1/temperature] updated: 71.88 C
+INFO     src.coap.server:server.py:64 [line1/vibration] updated: 1.493 mm/s
+INFO     src.coap.server:server.py:64 [line1/power] updated: 42.443 kW
+INFO     src.coap.server:server.py:64 [line2/temperature] updated: 69.193 C
+PASSED                                                                                                             [ 10%]
+tests/coap/test_proxy.py::TestCoAPHTTPProxy::test_proxy_etag_header PASSED                                         [ 13%]
+tests/coap/test_proxy.py::TestCoAPHTTPProxy::test_proxy_location_header 
+----------------------------------------------------- live log call -----------------------------------------------------
+INFO     src.coap.server:server.py:64 [line1/temperature] updated: 68.648 C
+INFO     src.coap.server:server.py:64 [line1/vibration] updated: 0.618 mm/s
+INFO     src.coap.server:server.py:64 [line1/power] updated: 44.813 kW
+INFO     src.coap.server:server.py:64 [line2/temperature] updated: 65.805 C
+PASSED                                                                                                             [ 17%]
+tests/coap/test_proxy.py::TestCoAPHTTPProxy::test_proxy_payload_is_valid_json PASSED                               [ 20%]
+tests/coap/test_proxy.py::TestCoAPHTTPProxy::test_proxy_line2_temperature PASSED                                   [ 24%]
+--------------------------------------------------- live log teardown ---------------------------------------------------
+INFO     src.coap.server:server.py:64 [line1/temperature] updated: 65.65 C
+
+INFO     src.coap.server:server.py:64 [line1/vibration] updated: 1.073 mm/s
+INFO     src.coap.server:server.py:64 [line1/power] updated: 47.389 kW
+INFO     src.coap.server:server.py:64 [line2/temperature] updated: 72.559 C
+INFO     websockets.server:server.py:452 server closing
+INFO     websockets.server:server.py:487 server closed
+
+tests/coap/test_server.py::TestCoAPServer::test_get_temperature_line1 
+---------------------------------------------------- live log setup -----------------------------------------------------
+INFO     src.coap.server:server.py:193 CoAP server will bind to ::1:5683
+INFO     websockets.server:server.py:341 server listening on [::1]:8683
+PASSED                                                                                                             [ 27%]
+tests/coap/test_server.py::TestCoAPServer::test_get_vibration_line1 PASSED                                         [ 31%]
+tests/coap/test_server.py::TestCoAPServer::test_get_power_line1 PASSED                                             [ 34%]
+tests/coap/test_server.py::TestCoAPServer::test_get_temperature_line2 PASSED                                       [ 37%]
+tests/coap/test_server.py::TestCoAPServer::test_put_actuator_on 
+----------------------------------------------------- live log call -----------------------------------------------------
+INFO     src.coap.server:server.py:103 Fan actuator set to ON
+PASSED                                                                                                             [ 41%]
+tests/coap/test_server.py::TestCoAPServer::test_put_actuator_off 
+----------------------------------------------------- live log call -----------------------------------------------------
+INFO     src.coap.server:server.py:103 Fan actuator set to OFF
+PASSED                                                                                                             [ 44%]
+tests/coap/test_server.py::TestCoAPServer::test_put_actuator_invalid PASSED                                        [ 48%]
+tests/coap/test_server.py::TestCoAPServer::test_block2_manifest_large_enough 
+----------------------------------------------------- live log call -----------------------------------------------------
+INFO     src.coap.server:server.py:162 Manifest size: 44455 bytes
+PASSED                                                                                                             [ 51%]
+tests/coap/test_server.py::TestCoAPServer::test_block2_manifest_valid_json 
+----------------------------------------------------- live log call -----------------------------------------------------
+INFO     src.coap.server:server.py:162 Manifest size: 44455 bytes
+PASSED                                                                                                             [ 55%]
+tests/coap/test_server.py::TestCoAPServer::test_well_known_core PASSED                                             [ 58%]
+--------------------------------------------------- live log teardown ---------------------------------------------------
+INFO     websockets.server:server.py:452 server closing
+
+INFO     websockets.server:server.py:487 server closed
+
+tests/mqtt/test_publisher.py::TestPublisher::test_connect_uses_persistent_session PASSED                           [ 62%]
+tests/mqtt/test_publisher.py::TestPublisher::test_correct_topic_format PASSED                                      [ 65%]
+tests/mqtt/test_publisher.py::TestPublisher::test_publishes_all_six_sensors 
+----------------------------------------------------- live log call -----------------------------------------------------
+INFO     src.mqtt.publisher:publisher.py:144 topic=factory/line1/temperature  value=69.171 C  QoS=1  ts=2026-05-28T17:30:05.693622+00:00  seq=1
+INFO     src.mqtt.publisher:publisher.py:144 topic=factory/line1/vibration  value=1.468 mm/s  QoS=0  ts=2026-05-28T17:30:05.694772+00:00  seq=1
+INFO     src.mqtt.publisher:publisher.py:144 topic=factory/line1/power  value=44.26 kW  QoS=2  ts=2026-05-28T17:30:05.695639+00:00  seq=1
+INFO     src.mqtt.publisher:publisher.py:144 topic=factory/line2/temperature  value=74.239 C  QoS=1  ts=2026-05-28T17:30:05.696384+00:00  seq=1
+INFO     src.mqtt.publisher:publisher.py:144 topic=factory/line2/vibration  value=1.672 mm/s  QoS=0  ts=2026-05-28T17:30:05.697110+00:00  seq=1
+INFO     src.mqtt.publisher:publisher.py:144 topic=factory/line2/power  value=44.218 kW  QoS=2  ts=2026-05-28T17:30:05.697834+00:00  seq=1
+PASSED                                                                                                             [ 68%]
+tests/mqtt/test_publisher.py::TestPublisher::test_correct_qos_per_sensor 
+----------------------------------------------------- live log call -----------------------------------------------------
+INFO     src.mqtt.publisher:publisher.py:144 topic=factory/line1/temperature  value=70.211 C  QoS=1  ts=2026-05-28T17:30:05.703371+00:00  seq=1
+INFO     src.mqtt.publisher:publisher.py:144 topic=factory/line1/vibration  value=1.41 mm/s  QoS=0  ts=2026-05-28T17:30:05.704340+00:00  seq=1
+INFO     src.mqtt.publisher:publisher.py:144 topic=factory/line1/power  value=40.476 kW  QoS=2  ts=2026-05-28T17:30:05.704955+00:00  seq=1
+INFO     src.mqtt.publisher:publisher.py:144 topic=factory/line2/temperature  value=68.53 C  QoS=1  ts=2026-05-28T17:30:05.705438+00:00  seq=1
+INFO     src.mqtt.publisher:publisher.py:144 topic=factory/line2/vibration  value=1.712 mm/s  QoS=0  ts=2026-05-28T17:30:05.705905+00:00  seq=1
+INFO     src.mqtt.publisher:publisher.py:144 topic=factory/line2/power  value=43.756 kW  QoS=2  ts=2026-05-28T17:30:05.706948+00:00  seq=1
+PASSED                                                                                                             [ 72%]
+tests/mqtt/test_publisher.py::TestPublisher::test_lwt_configured PASSED                                            [ 75%]
+tests/mqtt/test_publisher.py::TestPublisher::test_reading_payload_is_valid_json 
+----------------------------------------------------- live log call -----------------------------------------------------
+INFO     src.mqtt.publisher:publisher.py:144 topic=factory/line1/temperature  value=71.617 C  QoS=1  ts=2026-05-28T17:30:05.716912+00:00  seq=1
+PASSED                                                                                                             [ 79%]
+tests/mqtt/test_publisher.py::TestSubscriber::test_wildcard_subscription_registered 
+----------------------------------------------------- live log call -----------------------------------------------------
+INFO     src.mqtt.subscriber:subscriber.py:58 Connected to broker
+INFO     src.mqtt.subscriber:subscriber.py:60 Subscribed: factory/#  (QoS 1)
+INFO     src.mqtt.subscriber:subscriber.py:62 Subscribed: factory/+/temperature  (QoS 2)
+PASSED                                                                                                             [ 82%]
+tests/mqtt/test_publisher.py::TestSubscriber::test_temperature_qos2_subscription 
+----------------------------------------------------- live log call -----------------------------------------------------
+INFO     src.mqtt.subscriber:subscriber.py:58 Connected to broker
+INFO     src.mqtt.subscriber:subscriber.py:60 Subscribed: factory/#  (QoS 1)
+INFO     src.mqtt.subscriber:subscriber.py:62 Subscribed: factory/+/temperature  (QoS 2)
+PASSED                                                                                                             [ 86%]
+tests/mqtt/test_publisher.py::TestSubscriber::test_critical_alert_fires_above_threshold PASSED                     [ 89%]
+tests/mqtt/test_publisher.py::TestSubscriber::test_no_alert_below_threshold PASSED                                 [ 93%]
+tests/mqtt/test_publisher.py::TestSubscriber::test_message_counts_tracked PASSED                                   [ 96%]
+tests/mqtt/test_qos_loss.py::test_qos_comparison_under_loss PASSED                                                 [100%]
+
+================================================== 29 passed in 36.09s ==================================================
+PS C:\Users\Dev\OneDrive\Desktop\Master's\Real time Data Analytics with IOT\Smart Factory IOT protocol integration\Module1_StarterKit\starter_kit> 
