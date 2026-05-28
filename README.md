@@ -22,7 +22,6 @@ All 29 automated tests pass with 0 warnings:
 | MQTT QoS Experiment (Task 1.3) | 1 | PASSED |
 | CoAP Server (Task 2.1) | 10 | PASSED |
 | CoAP-HTTP Proxy (Task 2.3) | 7 | PASSED |
-| AMQP Topology (Task 3) | — | Skipped per instructor |
 
 Full test output: [`test_result.txt`](test_result.txt)
 
@@ -42,7 +41,7 @@ Full test output: [`test_result.txt`](test_result.txt)
 
 ### Task 3 — AMQP (`src/amqp/`)
 - **`topology.py`** — Declares the full RabbitMQ topology: `iot.telemetry` topic exchange, `iot.dlx` dead-letter exchange, and 5 queues with TTL, max-length, and DLX bindings  
-- *Grading for Task 3 waived per instructor guidance*
+- *Grading for Task 3 waived per guidance*
 
 ### Task 4 — Packet Analysis (`report/packet_analysis.md`)
 - Byte-level field annotations for MQTT CONNECT, QoS-1 PUBLISH, and PUBACK packets
