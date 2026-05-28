@@ -1,5 +1,5 @@
 # SmartFactory IoT Protocol Integration
-### Real-Time Data Analytics for IoT — Module 1 Assignment
+### Module 1 — Real-Time Data Analytics for IoT
 
 **Student:** Dev Vimalkumar Patel  
 **Student ID:** 101042729  
@@ -9,7 +9,7 @@
 
 ## Test Results
 
-All automated tests pass:
+All 29 automated tests pass with 0 warnings:
 
 ```
 29 passed in 35.51s
@@ -24,59 +24,56 @@ All automated tests pass:
 | CoAP-HTTP Proxy (Task 2.3) | 7 | PASSED |
 | AMQP Topology (Task 3) | — | Skipped per instructor |
 
-Full output: [`test_result.txt`](test_result.txt)
+Full test output: [`test_result.txt`](test_result.txt)
 
-> Proxy test suite updated to professor's 7-test version (adds ETag, Location, and line2 checks).
+> The CoAP proxy test suite covers all 7 checks including ETag mapping, Location header, and multi-line resource access.
 
 ---
 
-## What Was Built
+## Implementation Overview
 
 ### Task 1 — MQTT (`src/mqtt/`)
-- **`publisher.py`** — Publishes all 6 sensors (3 types × 2 lines) at 1 Hz with correct QoS per sensor type (temperature=QoS1, vibration=QoS0, power=QoS2), persistent session, and LWT configured for `factory/line1/status`
-- **`subscriber.py`** — Wildcard subscriber on `factory/#`, separate QoS-2 subscription on `factory/+/temperature`, CRITICAL ALERT detection at >85°C, 30-second message summary
+- **`publisher.py`** — Simulates 6 factory sensors (3 sensor types across 2 production lines) publishing at 1 Hz. Each sensor uses the correct QoS level: temperature=QoS 1, vibration=QoS 0, power=QoS 2. Configured with a persistent session and Last Will Testament on `factory/line1/status`
+- **`subscriber.py`** — Subscribes to all topics via `factory/#` wildcard plus a dedicated QoS-2 subscription on `factory/+/temperature`. Triggers CRITICAL ALERT when temperature exceeds 85°C and logs a rolling 30-second message summary
 
 ### Task 2 — CoAP (`src/coap/`)
-- **`server.py`** — 6 observable resources (`/factory/line{1,2}/{temperature,vibration,power}`), fan actuator (`/actuator/line1/fan` with PUT ON/OFF → 2.04 Changed), and a >33 KB firmware manifest at `/factory/manifest` triggering Block2 transfer
-- **`observer.py`** — Concurrent Observe subscriptions on both temperature resources, stale-notification detection (RFC 7641 mod-2²⁴), clean deregistration after 60 s, Block2 manifest reassembly
+- **`server.py`** — Serves 6 observable sensor endpoints at `/factory/line{1,2}/{temperature,vibration,power}`. Includes a fan actuator at `/actuator/line1/fan` accepting PUT ON/OFF and returning 2.04 Changed, plus a >33 KB firmware manifest at `/factory/manifest` that exercises Block2 fragmentation
+- **`observer.py`** — Registers concurrent Observe subscriptions on both line temperature resources. Implements stale-notification rejection per RFC 7641 (mod-2²⁴ sequence comparison), graceful deregistration after 60 s, and Block2 manifest reassembly
 
 ### Task 3 — AMQP (`src/amqp/`)
-- **`topology.py`** — Full RabbitMQ topology: `iot.telemetry` topic exchange, `iot.dlx` dead-letter exchange, 5 queues with correct TTL/max-length/DLX bindings  
-- *Task 3 skipped for grading per instructor instruction*
+- **`topology.py`** — Declares the full RabbitMQ topology: `iot.telemetry` topic exchange, `iot.dlx` dead-letter exchange, and 5 queues with TTL, max-length, and DLX bindings  
+- *Grading for Task 3 waived per instructor guidance*
 
 ### Task 4 — Packet Analysis (`report/packet_analysis.md`)
-- MQTT CONNECT, QoS-1 PUBLISH, and PUBACK annotated with byte-level field breakdowns
-- CoAP CON GET, ACK 2.05 Content, and Observe notification annotated
+- Byte-level field annotations for MQTT CONNECT, QoS-1 PUBLISH, and PUBACK packets
+- Wire-level breakdown of CoAP CON GET request, ACK 2.05 Content response, and Observe notification
 
-### Task 5 — Protocol Comparison Report (`report/comparison_report.md`)
-- QoS comparison table with measured latencies (QoS0=2.7ms, QoS1=2.8ms, QoS2=7.0ms)
-- CoAP–HTTP proxy option mapping (RFC 8075)
-- Protocol recommendations for all 4 SmartFactory data paths
-- Reflection on implementation challenges (~300 words)
+### Task 5 — Protocol Comparison (`report/comparison_report.md`)
+- Measured QoS latency table: QoS0=2.7 ms, QoS1=2.8 ms, QoS2=7.0 ms
+- CoAP-to-HTTP header translation per RFC 8075
+- Protocol selection recommendations for all 4 SmartFactory data paths
+- Technical reflection on implementation challenges
 
 ---
 
-## How to Run
+## Setup & Execution
 
-### Prerequisites
+### Requirements
 - Python 3.10+
-- Docker Desktop running
+- Docker Desktop (running)
 
-### Setup
+### Install & Start Broker
 ```bash
-# Install dependencies
 pip install -r requirements.txt
-
-# Start MQTT broker
 docker compose up -d mosquitto
 ```
 
-### Run Tests
+### Run All Tests
 ```bash
 python -m pytest tests/mqtt/ tests/coap/ -v
 ```
 
-### Run Individual Components
+### Start Individual Components
 ```bash
 # MQTT
 python -m src.mqtt.publisher      # Terminal 1
@@ -89,7 +86,7 @@ python -m src.coap.observer       # Terminal 2
 
 ---
 
-## Project Structure
+## Repository Layout
 
 ```
 module1-assignment/
@@ -111,15 +108,15 @@ module1-assignment/
 │   └── comparison_report.md     ← Task 5 report
 ├── tests/                       ← Do not modify
 ├── docker-compose.yml           ← Do not modify
-└── README.md                    ← Brief run instructions
+└── README.md
 ```
 
 ---
 
-## Infrastructure
+## Services
 
-| Service | Port | Notes |
-|---------|------|-------|
+| Service | Port | Command |
+|---------|------|---------|
 | Mosquitto MQTT | 1883 | `docker compose up -d mosquitto` |
 | CoAP Server | 5683 | `python -m src.coap.server` |
 | RabbitMQ | 5672 / 15672 | `docker compose up -d rabbitmq` |
